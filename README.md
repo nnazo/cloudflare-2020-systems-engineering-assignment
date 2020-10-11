@@ -22,41 +22,41 @@ Command run: `./target/release/cloudflare-2020-systems-engineering-assignment --
 ### Other Site Benchmark Outputs
 Note: omitting returned webpage content due to their length.
 
-Output for https://github.com/nnazo
+Reduced output for `./target/release/cloudflare-2020-systems-engineering-assignment --url https://github.com/nnazo --profile 100`
 ```
 # of requests made: 100
 fastest time: 195 ms
-slowest time: 1023 ms
-mean time: 276.83 ms
-median time: 213 ms
-success percentage: 49%
-error codes: [429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429]
-smallest response: 1474 bytes
-largest response: 172206 bytes
+slowest time: 1178 ms
+mean time: 267.17 ms
+median time: 209 ms
+success percentage: 39%
+unsuccessful response codes: [429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429, 429]
+smallest response: 1947 bytes
+largest response: 174617 bytes
 ```
 
-Output for https://duckduckgo.com
+Reduced output for `./target/release/cloudflare-2020-systems-engineering-assignment --url https://duckduckgo.com --profile 100`
 ```
 # of requests made: 100
 fastest time: 168 ms
-slowest time: 216 ms
-mean time: 189.74 ms
-median time: 189 ms
+slowest time: 215 ms
+mean time: 189.08 ms
+median time: 193 ms
 success percentage: 100%
-error codes: []
-smallest response: 5763 bytes
-largest response: 5763 bytes
+unsuccessful response codes: []
+smallest response: 6346 bytes
+largest response: 7138 bytes
 ```
 
 Full output for https://google.com
 ```
-➜  cloudflare-2020-systems-engineering-assignment git:(main) ✗ ./target/release/cloudflare-2020-systems-engineering-assignment --url https://google.com --profile 100
+➜  cloudflare-2020-systems-engineering-assignment git:(main) ✗ ./target/release/cloudflare-2020-systems-engineering-assignment --url https://google.com --profile 100    
 response:
 HTTP/1.1 301 Moved Permanently
 Location: https://www.google.com/
 Content-Type: text/html; charset=UTF-8
-Date: Sun, 11 Oct 2020 04:22:50 GMT
-Expires: Tue, 10 Nov 2020 04:22:50 GMT
+Date: Sun, 11 Oct 2020 18:21:15 GMT
+Expires: Tue, 10 Nov 2020 18:21:15 GMT
 Cache-Control: public, max-age=2592000
 Server: gws
 Content-Length: 220
@@ -74,14 +74,14 @@ The document has moved
 
 
 # of requests made: 100
-fastest time: 90 ms
-slowest time: 185 ms
-mean time: 99.9 ms
-median time: 99 ms
-success percentage: 100%
-error codes: []
-smallest response: 220 bytes
-largest response: 220 bytes
+fastest time: 86 ms
+slowest time: 122 ms
+mean time: 98.34 ms
+median time: 96 ms
+success percentage: 0%
+unsuccessful response codes: [301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301, 301]
+smallest response: 779 bytes
+largest response: 779 bytes
 ```
 
-Out of the requests that returned a semi-large HTML webpage, the worker site seemed the fastest for the given response size. The github and request took much longer and returned a response half the size, though requests did get rate-limited in that benchmark. Google had a similar benchmark time but the response was much smaler than the worker site.
+Out of the requests that returned a semi-large HTML webpage, the worker site seemed the fastest for the given response size. The github request took much longer although the successful responses were much larger. Rust-lang had a similar benchmark time but the response was much smaler than the worker site since it was always gave a 301 response code.

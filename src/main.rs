@@ -68,8 +68,8 @@ fn main() -> Result<()> {
             println!("response:\n{}", resp);
         }
 
-        // Do benchmarks
-        bench.update(start, end, resp);
+        // Update benchmarks
+        bench.update(start, end, &resp);
     }
 
     // Print benchmark results
@@ -80,7 +80,7 @@ fn main() -> Result<()> {
     println!("mean time: {} ms", bench.mean());
     println!("median time: {} ms", bench.median());
     println!("success percentage: {}%", bench.success_percentage());
-    println!("error codes: {:?}", bench.error_codes);
+    println!("unsuccessful response codes: {:?}", bench.unsuccessful_codes);
     println!("smallest response: {} bytes", bench.smallest.unwrap_or_default());
     println!("largest response: {} bytes", bench.largest);
 

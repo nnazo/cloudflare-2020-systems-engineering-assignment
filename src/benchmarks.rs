@@ -7,7 +7,7 @@ pub struct Benchmarks {
     pub slowest: Option<u128>,
     pub fastest: Option<u128>,
     pub succeeded: u32,
-    pub error_codes: Vec<u32>,
+    pub unsuccessful_codes: Vec<u32>,
     pub smallest: Option<usize>,
     pub largest: usize,
 }
@@ -15,7 +15,7 @@ pub struct Benchmarks {
 impl Benchmarks {
     /// Updates our benchmark values as necessary given the start, end Instants and
     /// the response.
-    pub fn update(&mut self, start: Instant, end: Instant, resp: String) -> Option<()> {
+    pub fn update(&mut self, start: Instant, end: Instant, resp: &str) -> Option<()> {
         let duration = end
             .checked_duration_since(start)
             .expect("End instant occurred before start instant");
@@ -42,28 +42,26 @@ impl Benchmarks {
                 self.fastest.replace(ms);
             }
         }
-
-        // Get the response body. If there was not one, return
-        let body = resp.splitn(2, "\r\n\r\n").last()?;
         
         // Update the largest response body if necessary
-        self.largest = self.largest.max(body.len());
+        self.largest = self.largest.max(resp.len());
 
         // Update the smallest response body if necessary
         match &mut self.smallest {
             Some(smallest) => {
-                 *smallest = (*smallest).min(body.len());
+                *smallest = (*smallest).min(resp.len());
             },
             None => {
-                self.smallest.replace(body.len());
+                self.smallest.replace(resp.len());
             }
         }
 
         // Get the 2nd value in the iterator, which is the response code;
         let code = resp.split_ascii_whitespace().into_iter().nth(1)?;
         if let Ok(code) = code.parse::<u32>() {
-            if code >= 400 {
-                self.error_codes.push(code);
+            // Consider anything not a 2xx response as unsuccessful.
+            if code < 200 || code > 299 {
+                self.unsuccessful_codes.push(code);
             } else {
                 self.succeeded += 1;
             }
@@ -88,7 +86,8 @@ impl Benchmarks {
 
     /// Computes the success percentage of the requests
     pub fn success_percentage(&self) -> f64 {
-        let num = self.durations.len();
-        ((num - self.error_codes.len()) as f64 / num as f64) * 100 as f64
+        let total = self.durations.len();
+        let successful = total - self.unsuccessful_codes.len();
+        (successful as f64 / total as f64) * 100 as f64
     }
 }
