@@ -3,8 +3,9 @@
 ## Build
 You must have Rust and Cargo installed.
 1. Install Rust and Cargo if necessary
-2. Run `cargo build --release`
-3. Execute `./target/release/cloudflare-2020-systems-engineering-assignment` with the desired options.
+2. Have OpenSSL installed, and refer to https://docs.rs/openssl/0.10.30/openssl/#manual for setting environment variables if your installation is not automatically detected.
+3. Run `cargo build --release`
+4. Execute `./target/release/cloudflare-2020-systems-engineering-assignment` with the desired options.
 
 ## Benchmarks
 ### Links Benchmark
