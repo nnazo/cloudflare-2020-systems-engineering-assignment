@@ -62,13 +62,10 @@ fn main() -> Result<()> {
         // Get the end time
         let end = Instant::now();
 
-        // Print the body if it is the first iteration
+        // Print the response if it is the first iteration
         let resp = String::from_utf8_lossy(&buf).into_owned();
-        let body = resp.split("\r\n\r\n").last();
-        if let Some(body) = body {
-            if i < 1 {
-                println!("response body:\n{}", body);
-            }
+        if i < 1 {
+            println!("response:\n{}", resp);
         }
 
         // Do benchmarks
