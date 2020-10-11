@@ -44,7 +44,7 @@ impl Benchmarks {
         }
 
         // Get the response body. If there was not one, return
-        let body = resp.split("\r\n\r\n").last()?;
+        let body = resp.splitn(2, "\r\n\r\n").last()?;
         
         // Update the largest response body if necessary
         self.largest = self.largest.max(body.len());
